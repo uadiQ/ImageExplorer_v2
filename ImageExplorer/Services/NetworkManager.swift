@@ -15,7 +15,7 @@ final class NetworkManager {
     
     private init() { }
     
-    func fetchRecentPhotos(completionHandler: @escaping (Result<JSON>) -> Void) {
+    func fetchRecentPhotos(completionHandler: @escaping (Result<JSON, Error>) -> Void) {
         Alamofire.request(Constants.Networking.photos, headers: Constants.Networking.headers).responseJSON { response in
             switch response.result {
             case .success(let value):
@@ -28,6 +28,23 @@ final class NetworkManager {
                 
             }
         }
+    }
+    
+    func searchPhotos(by keyword: String, completionHandler: @escaping (Result<JSON, Error>) -> Void) {
+        let parameters: Parameters = [ "per_page": 100, "query": keyword ]
+        Alamofire.request(Constants.Networking.searchPhotos, method: .get, parameters: parameters, headers: Constants.Networking.headers).responseJSON { response in
+            print(response.request?.url)
+            switch response.result {
+            case .success(let value):
+                let jsonResponse = JSON(value)
+                completionHandler(.success(jsonResponse))
+                
+            case .failure(let error):
+                print("failedRequest")
+                completionHandler(.fail(error))
+                
+            }
+            }
     }
     
 }

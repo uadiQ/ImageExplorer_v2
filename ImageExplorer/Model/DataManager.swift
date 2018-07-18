@@ -50,6 +50,24 @@ final class DataManager {
         }
     }
     
+    func performSearch(for category: String, completion: @escaping (Result<[Post], Error>) -> Void) {
+        networkManager.searchPhotos(by: category) { result in
+            switch result {
+            case .success(let jsonValue):
+                guard let jsonArray = jsonValue["results"].array else {print("Error at transition into array"); return }
+                var fetchedPosts: [Post] = []
+                for object in jsonArray {
+                    guard let post = Post(json: object) else { continue }
+                    fetchedPosts.append(post)
+                }
+                completion(.success(fetchedPosts))
+            case .fail(let error):
+                completion(.fail(error))
+                print(error)
+            }
+        }
+    }
+    
     func addToFavourites(post: Post) {
         DispatchQueue.global().async {
             var newPost = Post(id: post.id,
@@ -58,7 +76,7 @@ final class DataManager {
                                user: post.user)
             
             if let imageUrl = URL(string: newPost.urls.full) {
-                newPost.saveMealImage(by: imageUrl)
+                newPost.savePostImage(by: imageUrl)
             }
             self.favourites.append(newPost)
             DispatchQueue.main.async {
@@ -69,7 +87,10 @@ final class DataManager {
     }
     
     func deleteFromFavourites(post: Post) {
-        guard let deletingIndex = favourites.index(of: post) else {print("No such meal at favourites"); return }
+        guard let deletingIndex = favourites.index(of: post) else {
+            print("No such post at favourites")
+            return
+        }
         favourites.remove(at: deletingIndex)
         CoreDataManager.instance.deletePostFromFavorites(post)
     }

@@ -77,6 +77,7 @@ class PostTableViewCell: UITableViewCell {
     }
     
     @IBAction func likeButtonPushed(_ sender: UIButton) {
+        likeButton.isEnabled.toggle()
         favouriteAddingDelegate?.processAddition(of: post)
     }
 }

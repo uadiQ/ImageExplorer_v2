@@ -15,8 +15,10 @@ enum Constants {
         return "Client-ID " + Constants.accessKey
     }
     
-    static let showDetails = "showDetails"
-    
+    enum Navigation {
+        static let showDetails = "showDetails"
+        static let showSearchResults = "showSearchResults"
+    }
     enum Networking {
         
         static var baseWeb: URL {
@@ -26,6 +28,10 @@ enum Constants {
         static var baseAPI: URL {
             guard let baseURL = URL(string: "https://api.unsplash.com/") else { fatalError("Error at creating base URL") }
             return baseURL
+        }
+        
+        static var searchPhotos: URL {
+            return Networking.baseAPI.appendingPathComponent("search").appendingPathComponent("photos")
         }
         
         static var photos: URL {

@@ -65,7 +65,7 @@ struct Post {
         self.fullPhotoImage = imageToSet
     }
     
-    mutating func saveMealImage(by url: URL) {
+    mutating func savePostImage(by url: URL) {
         guard let dataImage = try? Data(contentsOf: url) else { return }
         self.fullPhotoImage = UIImage(data: dataImage)
     }

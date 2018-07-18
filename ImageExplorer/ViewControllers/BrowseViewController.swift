@@ -11,15 +11,19 @@ import PKHUD
 
 class BrowseViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     private var recentPosts: [Post] = []
+    private var searchedCategory: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
+        searchBar.delegate = self
+        addGestures()
         DataManager.instance.fetchRecentPhotos()
         HUD.show(.progress, onView: view)
-        title = "Explore"
+        title = "Recent"
         navigationController?.navigationBar.tintColor = .black
     }
     
@@ -34,12 +38,26 @@ class BrowseViewController: UIViewController {
         removeObservers()
     }
     
+    private func addGestures() {
+        let upSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(hideKeyboardGestureRecognized))
+        upSwipeGestureRecognizer.direction = .up
+        
+        let downSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(hideKeyboardGestureRecognized))
+        downSwipeGestureRecognizer.direction = .down
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboardGestureRecognized))
+        for recognizer in [upSwipeGestureRecognizer, downSwipeGestureRecognizer, tapGestureRecognizer] {
+            view.addGestureRecognizer(recognizer)
+        }
+    }
+    
     private func setupTableView() {
         tableView.delaysContentTouches = false
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(PostTableViewCell.nib, forCellReuseIdentifier: PostTableViewCell.reuseID)
         tableView.isUserInteractionEnabled = true
+        tableView.keyboardDismissMode = .onDrag
     }
     
     private func setObservers() {
@@ -52,9 +70,15 @@ class BrowseViewController: UIViewController {
         NotificationCenter.default.removeObserver(self)
     }
     
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let destVC = segue.destination as? DetailsViewController else { return }
-        destVC.post = sender as? Post
+        if let destVC = segue.destination as? DetailsViewController {
+            destVC.post = sender as? Post
+        } else if let destVC = segue.destination as? SearchResultsViewController, let sendedString = sender as? String {
+            destVC.searchingCategory = sendedString
+        } else {
+            return
+        }
     }
     
 }
@@ -75,10 +99,7 @@ extension BrowseViewController {
     
     @objc func processFailedRequest() {
         HUD.hide()
-        let alertMessage = UIAlertController(title: "Error", message: "New posts request failed", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alertMessage.addAction(okAction)
-        self.present(alertMessage, animated: true, completion: nil)
+        showAlertWithOk(title: "Error", message: "New posts request failed")
     }
 }
 
@@ -105,11 +126,13 @@ extension BrowseViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let mealToPresent = recentPosts[indexPath.row]
-        performSegue(withIdentifier: Constants.showDetails, sender: mealToPresent)
+        let postToPresent = recentPosts[indexPath.row]
+        performSegue(withIdentifier: Constants.Navigation.showDetails, sender: postToPresent)
+        self.view.endEditing(true)
     }
 }
 
+// MARK: - Postsharing protocol
 extension BrowseViewController: PostSharing {
     func share(urlToShare: URL) {
         let activityViewController = UIActivityViewController(activityItems: [urlToShare], applicationActivities: nil)
@@ -118,9 +141,31 @@ extension BrowseViewController: PostSharing {
     }
 }
 
+// MARK: - FavouriteAddding protocol
 extension BrowseViewController: FavouriteAdding {
     func processAddition(of post: Post) {
-        HUD.flash(.labeledSuccess(title: "Meal added to Favorites!", subtitle: nil))
+        HUD.flash(.labeledSuccess(title: "Post added to Favorites!", subtitle: nil))
         DataManager.instance.addToFavourites(post: post)
+    }
+}
+
+// MARK: - SearchBar Delegate Methods
+extension BrowseViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        self.view.endEditing(true)
+        guard let searchingText = searchBar.text, !searchingText.isEmpty else {
+            showAlertWithOk(title: "Error", message: "Search field can't be empty")
+            return
+        }
+        performSegue(withIdentifier: Constants.Navigation.showSearchResults, sender: searchingText)
+    }
+    
+}
+
+// MARK: - Hide Keyboard Gestures
+
+extension BrowseViewController {
+    @objc func hideKeyboardGestureRecognized() {
+        self.view.endEditing(true)
     }
 }

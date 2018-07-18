@@ -64,8 +64,8 @@ extension BookmarksViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let mealToPresent = DataManager.instance.favourites[indexPath.row]
-        performSegue(withIdentifier: Constants.showDetails, sender: mealToPresent)
+        let postToPresent = DataManager.instance.favourites[indexPath.row]
+        performSegue(withIdentifier: Constants.Navigation.showDetails, sender: postToPresent)
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
