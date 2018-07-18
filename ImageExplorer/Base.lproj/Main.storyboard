@@ -94,7 +94,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="sF0-cJ-FM5">
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="jGJ-AK-jgY"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="organize" id="jGJ-AK-jgY">
+                            <connections>
+                                <action selector="saveToCameraRollPushed:" destination="FQl-rn-qVB" id="0Pg-9F-8TW"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="authorName" destination="CZD-ew-Cq1" id="ely-Mp-RQX"/>

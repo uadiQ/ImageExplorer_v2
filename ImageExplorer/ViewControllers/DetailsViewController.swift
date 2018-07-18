@@ -9,6 +9,7 @@
 import UIKit
 import SDWebImage
 import SafariServices
+import PKHUD
 
 class DetailsViewController: UIViewController {
     @IBOutlet private weak var photoImage: UIImageView!
@@ -39,4 +40,27 @@ class DetailsViewController: UIViewController {
         present(safariViewController, animated: true)
     }
     
+    @IBAction func saveToCameraRollPushed(_ sender: Any) {
+        HUD.show(.progress)
+        var imageToSave: UIImage
+        if let image = post.fullPhotoImage {
+            imageToSave = image
+        } else {
+            guard let urlToDownload = URL(string: post.urls.full),
+            let imageData = try? Data(contentsOf: urlToDownload),
+                let image = UIImage(data: imageData) else { return }
+            imageToSave = image
+        }
+        
+        UIImageWriteToSavedPhotosAlbum(imageToSave, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+    }
+    
+    @objc func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: UnsafeRawPointer) {
+        HUD.hide()
+        if let error = error {
+            showAlertWithOk(title: "Saving error", message: error.localizedDescription)
+        } else {
+            showAlertWithOk(title: "Success", message: "Image was saved to your camera roll")
+        }
+    }
 }
