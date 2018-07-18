@@ -39,7 +39,7 @@ class SearchResultsViewController: UIViewController {
                     self.searchResults = postsArray
                     self.tableView.reloadData()
                 case .fail:
-                    print("Failed search for keyword \(self.searchingCategory)")
+                    print("Failed search for keyword \(String(describing: self.searchingCategory))")
                     self.showAlertWithOk(title: "Error", message: "No posts for your request, try something else!")
                 }
             }

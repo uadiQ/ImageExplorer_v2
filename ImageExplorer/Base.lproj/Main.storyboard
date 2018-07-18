@@ -44,7 +44,7 @@
             </objects>
             <point key="canvasLocation" x="1545" y="343"/>
         </scene>
-        <!--Details View Controller-->
+        <!--Title-->
         <scene sceneID="Ksf-EQ-sUA">
             <objects>
                 <viewController id="FQl-rn-qVB" customClass="DetailsViewController" customModule="ImageExplorer" customModuleProvider="target" sceneMemberID="viewController">
@@ -93,6 +93,9 @@
                             <constraint firstItem="Vo2-u0-uVa" firstAttribute="top" secondItem="fGl-9S-cFs" secondAttribute="bottom" id="uKR-dT-ovZ"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Title" id="sF0-cJ-FM5">
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="jGJ-AK-jgY"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="authorName" destination="CZD-ew-Cq1" id="ely-Mp-RQX"/>
                         <outlet property="photoImage" destination="Vo2-u0-uVa" id="NIB-i4-URE"/>

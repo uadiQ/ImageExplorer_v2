@@ -14,6 +14,7 @@ class BookmarksViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
+        setupNavigationBar()
         title = "Favourites"
         
     }
@@ -26,6 +27,13 @@ class BookmarksViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self)
+    }
+    
+    private func setupNavigationBar() {
+        navigationController?.navigationBar.tintColor = .black
+        navigationController?.navigationBar.barTintColor = .cyan
+        navigationController?.navigationBar.isTranslucent = false
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
     
     private func setupTableView() {

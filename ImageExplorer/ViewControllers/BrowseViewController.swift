@@ -24,7 +24,7 @@ class BrowseViewController: UIViewController {
         DataManager.instance.fetchRecentPhotos()
         HUD.show(.progress, onView: view)
         title = "Recent"
-        navigationController?.navigationBar.tintColor = .black
+        setupNavigationBar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,15 +38,21 @@ class BrowseViewController: UIViewController {
         removeObservers()
     }
     
+    private func setupNavigationBar() {
+        navigationController?.navigationBar.tintColor = .black
+        navigationController?.navigationBar.barTintColor = .cyan
+        navigationController?.navigationBar.isTranslucent = false
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+    }
+    
     private func addGestures() {
         let upSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(hideKeyboardGestureRecognized))
         upSwipeGestureRecognizer.direction = .up
         
         let downSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(hideKeyboardGestureRecognized))
         downSwipeGestureRecognizer.direction = .down
-        
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboardGestureRecognized))
-        for recognizer in [upSwipeGestureRecognizer, downSwipeGestureRecognizer, tapGestureRecognizer] {
+
+        for recognizer in [upSwipeGestureRecognizer, downSwipeGestureRecognizer] {
             view.addGestureRecognizer(recognizer)
         }
     }
