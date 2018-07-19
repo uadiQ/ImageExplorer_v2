@@ -22,7 +22,7 @@ class DetailsViewController: UIViewController {
         setupUI()
     }
     
-    func setupUI() {
+    private func setupUI() {
         if let image = post.fullPhotoImage {
             photoImage.image = image
         } else {
@@ -30,6 +30,7 @@ class DetailsViewController: UIViewController {
         }
         authorName.text = "Author: \(post.user.name)"
     }
+    
     private func setImage(with url: String) {
         HUD.show(.progress, onView: self.photoImage)
         guard let targetUrl = URL(string: url) else {

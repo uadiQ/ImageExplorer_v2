@@ -19,13 +19,10 @@ class BrowseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupSearchBar()
-        setupTableView()
+        setupUI()
         addGestures()
+        HUD.show(.progress, onView: tableView)
         DataManager.instance.fetchRecentPhotos()
-        HUD.show(.progress, onView: view)
-        title = "Recent"
-        setupNavigationBar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -37,6 +34,13 @@ class BrowseViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super .viewWillDisappear(animated)
         removeObservers()
+    }
+    
+    private func setupUI() {
+        title = "Recent"
+        setupSearchBar()
+        setupNavigationBar()
+        setupTableView()
     }
     
     private func setupSearchBar() {
@@ -189,7 +193,6 @@ extension BrowseViewController: UISearchBarDelegate {
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(false, animated: true)
-        //self.view.endEditing(true)
     }
     
     

@@ -51,6 +51,15 @@ class PostTableViewCell: UITableViewCell {
         cardView.layer.shadowOpacity = CardShadow.opacity
     }
     
+    private func isFavourite(post: Post) -> Bool {
+        for item in DataManager.instance.favourites {
+            if item == post {
+                return true
+            }
+        }
+        return false
+    }
+    
     func update(with post: Post) {
         self.post = post
         if let image = post.fullPhotoImage {
@@ -60,15 +69,6 @@ class PostTableViewCell: UITableViewCell {
             photoImage.sd_setImage(with: imageUrl)
         }
         likeButton.isEnabled = !isFavourite(post: post)
-    }
-    
-    func isFavourite(post: Post) -> Bool {
-        for item in DataManager.instance.favourites {
-            if item == post {
-                return true
-            }
-        }
-        return false
     }
     
     @IBAction func shareButtonPushed(_ sender: UIButton) {

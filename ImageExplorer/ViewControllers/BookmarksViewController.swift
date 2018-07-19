@@ -14,10 +14,7 @@ class BookmarksViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupTableView()
-        setupNavigationBar()
-        title = "Favourites"
-        
+        setupUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -28,6 +25,12 @@ class BookmarksViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self)
+    }
+    
+    private func setupUI() {
+        title = "Favourites"
+        setupTableView()
+        setupNavigationBar()
     }
     
     private func setupNavigationBar() {

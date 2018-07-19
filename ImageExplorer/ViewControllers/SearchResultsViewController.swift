@@ -24,13 +24,13 @@ class SearchResultsViewController: UIViewController {
         loadSearchedPosts(for: searchingCategory)
     }
     
-    func setupTableView() {
+    private func setupTableView() {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(PostTableViewCell.nib, forCellReuseIdentifier: PostTableViewCell.reuseID)
     }
     
-    func loadSearchedPosts(for category: String) {
+    private func loadSearchedPosts(for category: String) {
         DataManager.instance.performSearch(for: searchingCategory) { result in
             DispatchQueue.main.async {
                 switch result {
