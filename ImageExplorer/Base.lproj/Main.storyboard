@@ -94,7 +94,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="sF0-cJ-FM5">
-                        <barButtonItem key="rightBarButtonItem" systemItem="organize" id="jGJ-AK-jgY">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="download" id="jGJ-AK-jgY">
                             <connections>
                                 <action selector="saveToCameraRollPushed:" destination="FQl-rn-qVB" id="0Pg-9F-8TW"/>
                             </connections>
@@ -125,7 +125,7 @@
                                 <rect key="frame" x="0.0" y="120" width="375" height="498"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
-                            <searchBar contentMode="redraw" searchBarStyle="prominent" translatesAutoresizingMaskIntoConstraints="NO" id="v5i-A8-usy">
+                            <searchBar contentMode="redraw" searchBarStyle="prominent" placeholder="Search photos" translatesAutoresizingMaskIntoConstraints="NO" id="v5i-A8-usy">
                                 <rect key="frame" x="0.0" y="64" width="375" height="56"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="barTintColor" red="0.0" green="0.99143940210000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -255,6 +255,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="download" width="24" height="24"/>
         <image name="like" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
