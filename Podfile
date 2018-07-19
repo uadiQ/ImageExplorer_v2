@@ -12,5 +12,6 @@ pod 'PKHUD'
 pod 'SwiftyJSON'
 pod 'SDWebImage', '~> 4.0'
 pod 'SwifterSwift/UIKit'
+pod 'Reveal-SDK', :configurations => ['Debug']
 
 end

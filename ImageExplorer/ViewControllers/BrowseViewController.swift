@@ -143,6 +143,7 @@ extension BrowseViewController: UITableViewDelegate, UITableViewDataSource {
         cell.update(with: postToPresent)
         cell.delegate = self
         cell.favouriteAddingDelegate = self
+        
         return cell
     }
     
