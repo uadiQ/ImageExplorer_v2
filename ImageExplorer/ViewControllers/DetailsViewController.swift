@@ -38,8 +38,8 @@ class DetailsViewController: UIViewController {
             return
         }
         DataManager.instance.downloadImage(with: targetUrl) { result in
-            HUD.hide()
             DispatchQueue.main.async {
+                HUD.hide()
                 switch result {
                 case .success(let image):
                     self.photoImage.image = image
