@@ -20,6 +20,8 @@ class BrowseViewController: UIViewController {
         super.viewDidLoad()
         setupTableView()
         searchBar.delegate = self
+        searchBar.tintColor = .black
+        
         addGestures()
         DataManager.instance.fetchRecentPhotos()
         HUD.show(.progress, onView: view)
@@ -166,6 +168,17 @@ extension BrowseViewController: UISearchBarDelegate {
         performSegue(withIdentifier: Constants.Navigation.showSearchResults, sender: searchingText)
     }
     
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = nil
+        view.endEditing(true)
+        searchBar.setShowsCancelButton(false, animated: true)
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(true, animated: true)
+    }
+    
+    
 }
 
 // MARK: - Hide Keyboard Gestures
@@ -173,5 +186,6 @@ extension BrowseViewController: UISearchBarDelegate {
 extension BrowseViewController {
     @objc func hideKeyboardGestureRecognized() {
         self.view.endEditing(true)
+        searchBar.setShowsCancelButton(false, animated: true)
     }
 }

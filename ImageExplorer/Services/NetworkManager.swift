@@ -20,7 +20,8 @@ final class NetworkManager {
     private init() { }
     
     func fetchRecentPhotos(completionHandler: @escaping (Result<JSON, Error>) -> Void) {
-        Alamofire.request(Constants.Networking.photos, headers: Constants.Networking.headers).responseJSON { response in
+        let parameters: Parameters = [ "per_page": 30 ]
+        Alamofire.request(Constants.Networking.photos, method: .get, parameters: parameters, headers: Constants.Networking.headers).responseJSON { response in
             switch response.result {
             case .success(let value):
                 let jsonResponse = JSON(value)
@@ -35,7 +36,7 @@ final class NetworkManager {
     }
     
     func searchPhotos(by keyword: String, completionHandler: @escaping (Result<JSON, Error>) -> Void) {
-        let parameters: Parameters = [ "per_page": 100, "query": keyword ]
+        let parameters: Parameters = [ "per_page": 30, "query": keyword ]
         Alamofire.request(Constants.Networking.searchPhotos, method: .get, parameters: parameters, headers: Constants.Networking.headers).responseJSON { response in
             print(response.request?.url)
             switch response.result {
