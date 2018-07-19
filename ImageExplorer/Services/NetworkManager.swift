@@ -10,6 +10,10 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
+enum NetworkError: Error {
+    case imageDownloadError
+}
+
 final class NetworkManager {
     static let instance = NetworkManager()
     
@@ -44,7 +48,18 @@ final class NetworkManager {
                 completionHandler(.fail(error))
                 
             }
+        }
+    }
+    
+    func downloadImage(with url: URL, completion:@escaping (Result<UIImage, Error>) -> Void) {
+        DispatchQueue.global().async {
+            guard let imageData = try? Data(contentsOf: url),
+                let image = UIImage(data: imageData) else {
+                    completion(.fail(NetworkError.imageDownloadError))
+                    return
             }
+            completion(.success(image))
+        }
     }
     
 }

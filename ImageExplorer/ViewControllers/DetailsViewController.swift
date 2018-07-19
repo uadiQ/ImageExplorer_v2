@@ -26,12 +26,27 @@ class DetailsViewController: UIViewController {
         if let image = post.fullPhotoImage {
             photoImage.image = image
         } else {
-            guard let regularUrl = URL(string: post.urls.regular) else { print( "wrong url")
-                return
-            }
-            photoImage.sd_setImage(with: regularUrl)
+            downloadImage(with: post.urls.full)
         }
         authorName.text = "Author: \(post.user.name)"
+    }
+    private func downloadImage(with url: String) {
+        HUD.show(.progress, onView: self.photoImage)
+        guard let targetUrl = URL(string: url) else {
+            showAlertWithOk(title: nil, message: "Wrong url format")
+            return
+        }
+        DataManager.instance.downloadImage(with: targetUrl) { result in
+            HUD.hide()
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let image):
+                    self.photoImage.image = image
+                case .fail:
+                    self.showAlertWithOk(title: "Error", message: "Image loading failed, try again later")
+                }
+            }
+        }
     }
     
     @IBAction func seeProfilePushed(_ sender: Any) {
@@ -42,16 +57,7 @@ class DetailsViewController: UIViewController {
     
     @IBAction func saveToCameraRollPushed(_ sender: Any) {
         HUD.show(.progress)
-        var imageToSave: UIImage
-        if let image = post.fullPhotoImage {
-            imageToSave = image
-        } else {
-            guard let urlToDownload = URL(string: post.urls.full),
-            let imageData = try? Data(contentsOf: urlToDownload),
-                let image = UIImage(data: imageData) else { return }
-            imageToSave = image
-        }
-        
+        guard let imageToSave = photoImage.image else { return }
         UIImageWriteToSavedPhotosAlbum(imageToSave, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
     }
     

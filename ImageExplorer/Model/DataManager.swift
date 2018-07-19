@@ -94,4 +94,15 @@ final class DataManager {
         favourites.remove(at: deletingIndex)
         CoreDataManager.instance.deletePostFromFavorites(post)
     }
+    
+    func downloadImage(with url: URL, completion: @escaping (Result<UIImage, Error>) -> Void) {
+        networkManager.downloadImage(with: url) { result in
+            switch result {
+            case .success(let image):
+                completion(.success(image))
+            case .fail(let error):
+                completion(.fail(error))
+            }
+        }
+    }
 }
