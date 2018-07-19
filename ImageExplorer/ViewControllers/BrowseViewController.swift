@@ -8,6 +8,7 @@
 
 import UIKit
 import PKHUD
+import SwifterSwift
 
 class BrowseViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
@@ -18,10 +19,8 @@ class BrowseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupSearchBar()
         setupTableView()
-        searchBar.delegate = self
-        searchBar.tintColor = .black
-        
         addGestures()
         DataManager.instance.fetchRecentPhotos()
         HUD.show(.progress, onView: view)
@@ -40,11 +39,21 @@ class BrowseViewController: UIViewController {
         removeObservers()
     }
     
+    private func setupSearchBar() {
+        searchBar.delegate = self
+        searchBar.tintColor = .black
+        searchBar.shadowOpacity = 1
+        searchBar.shadowColor = .clear
+        searchBar.setBackgroundImage(UIImage(color: .cyan, size: CGSize(width: 1, height: 1)), for: .any, barMetrics: .default)
+    }
+    
     private func setupNavigationBar() {
         navigationController?.navigationBar.tintColor = .black
         navigationController?.navigationBar.barTintColor = .cyan
-        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.isTranslucent = true
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.setBackgroundImage(UIImage(color: .cyan, size: CGSize(width: 1, height: 1)), for: .default)
     }
     
     private func addGestures() {
@@ -178,6 +187,11 @@ extension BrowseViewController: UISearchBarDelegate {
         searchBar.setShowsCancelButton(true, animated: true)
     }
     
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(false, animated: true)
+        //self.view.endEditing(true)
+    }
+    
     
 }
 
@@ -186,6 +200,7 @@ extension BrowseViewController: UISearchBarDelegate {
 extension BrowseViewController {
     @objc func hideKeyboardGestureRecognized() {
         self.view.endEditing(true)
-        searchBar.setShowsCancelButton(false, animated: true)
     }
 }
+
+

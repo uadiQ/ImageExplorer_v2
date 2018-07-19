@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwifterSwift
 
 class BookmarksViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
@@ -34,6 +35,8 @@ class BookmarksViewController: UIViewController {
         navigationController?.navigationBar.barTintColor = .cyan
         navigationController?.navigationBar.isTranslucent = false
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.setBackgroundImage(UIImage(color: .cyan, size: CGSize(width: 1, height: 1)), for: .default)
     }
     
     private func setupTableView() {

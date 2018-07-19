@@ -11,6 +11,6 @@ pod 'Alamofire'
 pod 'PKHUD'
 pod 'SwiftyJSON'
 pod 'SDWebImage', '~> 4.0'
-
+pod 'SwifterSwift/UIKit'
 
 end
