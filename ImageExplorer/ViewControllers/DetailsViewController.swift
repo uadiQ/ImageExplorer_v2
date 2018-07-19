@@ -50,7 +50,7 @@ class DetailsViewController: UIViewController {
         }
     }
     
-    private func downloadFullSizeImage(with url: String, completion:@escaping (Result<UIImage, Error>) -> Void) {
+    private func downloadFullSizeImage(with url: String, completion: @escaping (Result<UIImage, Error>) -> Void) {
         guard let targetUrl = URL(string: url) else {
             return
         }

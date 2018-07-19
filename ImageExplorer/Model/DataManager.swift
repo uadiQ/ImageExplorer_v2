@@ -96,13 +96,6 @@ final class DataManager {
     }
     
     func downloadImage(with url: URL, completion: @escaping (Result<UIImage, Error>) -> Void) {
-        networkManager.downloadImage(with: url) { result in
-            switch result {
-            case .success(let image):
-                completion(.success(image))
-            case .fail(let error):
-                completion(.fail(error))
-            }
-        }
+        networkManager.downloadImage(with: url, completion: completion)
     }
 }

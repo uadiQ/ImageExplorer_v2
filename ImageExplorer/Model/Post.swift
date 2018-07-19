@@ -76,4 +76,3 @@ extension Post: Equatable {
         return lhs.id == rhs.id
     }
 }
-

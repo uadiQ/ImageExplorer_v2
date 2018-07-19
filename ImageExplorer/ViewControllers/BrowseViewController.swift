@@ -205,5 +205,3 @@ extension BrowseViewController {
         self.view.endEditing(true)
     }
 }
-
-
