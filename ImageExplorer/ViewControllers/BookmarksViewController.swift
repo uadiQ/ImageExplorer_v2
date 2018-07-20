@@ -87,7 +87,6 @@ extension BookmarksViewController: UITableViewDelegate, UITableViewDataSource {
         guard editingStyle == .delete else { return }
         let deletingItem = DataManager.instance.favourites[indexPath.row]
         DataManager.instance.deleteFromFavourites(post: deletingItem)
-        
         tableView.deleteRows(at: [indexPath], with: .fade)
     }
 }

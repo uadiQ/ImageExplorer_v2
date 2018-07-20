@@ -22,6 +22,7 @@ class SearchResultsViewController: UIViewController {
         title = searchingCategory
         setupTableView()
         loadSearchedPosts(for: searchingCategory)
+        
     }
     
     private func setupTableView() {

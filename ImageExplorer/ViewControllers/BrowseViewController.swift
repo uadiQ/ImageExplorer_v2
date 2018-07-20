@@ -195,8 +195,7 @@ extension BrowseViewController: UISearchBarDelegate {
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(false, animated: true)
     }
-    
-    
+
 }
 
 // MARK: - Hide Keyboard Gestures

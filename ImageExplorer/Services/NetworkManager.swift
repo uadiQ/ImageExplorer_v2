@@ -22,6 +22,14 @@ final class NetworkManager {
     func fetchRecentPhotos(completionHandler: @escaping (Result<JSON, Error>) -> Void) {
         let parameters: Parameters = [ "per_page": 30 ]
         Alamofire.request(Constants.Networking.photos, method: .get, parameters: parameters, headers: Constants.Networking.headers).responseJSON { response in
+            
+            // Getting info for pagination
+            
+            if let link = response.response?.allHeaderFields["Link"] as? String {
+                self.parsePaginationInfo(linkString: link)
+            }
+ 
+            
             switch response.result {
             case .success(let value):
                 let jsonResponse = JSON(value)
@@ -38,7 +46,6 @@ final class NetworkManager {
     func searchPhotos(by keyword: String, completionHandler: @escaping (Result<JSON, Error>) -> Void) {
         let parameters: Parameters = [ "per_page": 30, "query": keyword ]
         Alamofire.request(Constants.Networking.searchPhotos, method: .get, parameters: parameters, headers: Constants.Networking.headers).responseJSON { response in
-            print(response.request?.url)
             switch response.result {
             case .success(let value):
                 let jsonResponse = JSON(value)
@@ -60,6 +67,18 @@ final class NetworkManager {
                     return
             }
             completion(.success(image))
+        }
+    }
+    
+    private func parsePaginationInfo(linkString: String) {
+        let links = linkString.split(separator: ",")
+        let components = links.flatMap { $0.split(separator: ";") }
+        if let lastComponent = components.last, lastComponent.hasSuffix("\"next\"") {
+            let requiredIndex = components.index(of: lastComponent)! - 1
+            var nextPage = components[requiredIndex]
+            nextPage.removeFirst()
+            nextPage.removeLast()
+            print(nextPage)
         }
     }
     
