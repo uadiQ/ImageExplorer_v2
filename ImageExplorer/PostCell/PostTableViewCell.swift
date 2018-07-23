@@ -42,7 +42,14 @@ class PostTableViewCell: UITableViewCell {
         super.awakeFromNib()
         setupShadow()
         self.selectionStyle = .none
+        roundImageCorners()
         NotificationCenter.default.addObserver(self, selector: #selector(favouritesChanged), name: .FavouritesChanged, object: nil)
+    }
+    
+    private func roundImageCorners() {
+        photoImage.clipsToBounds = true
+        photoImage.layer.cornerRadius = 7
+        photoImage.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     }
     
     private func setupShadow() {
