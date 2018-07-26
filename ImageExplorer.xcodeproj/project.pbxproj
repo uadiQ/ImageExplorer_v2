@@ -27,6 +27,7 @@
 		1CC7B64C20D2708200B74011 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CC7B64B20D2708200B74011 /* CoreDataManager.swift */; };
 		1CC7B64F20D2712800B74011 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CC7B64E20D2712800B74011 /* Constants.swift */; };
 		484E091320FF3DD0002F5024 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484E091220FF3DD0002F5024 /* SearchResultsViewController.swift */; };
+		48BE3D552109C99C00501A14 /* DetailsTwoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BE3D542109C99C00501A14 /* DetailsTwoViewController.swift */; };
 		48E12C9020FF78A60080FC37 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E12C8F20FF78A60080FC37 /* UIViewController+Extension.swift */; };
 		6872DF6D40A408F11DAC6513 /* Pods_ImageExplorer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 145B040C6F31F87814363920 /* Pods_ImageExplorer.framework */; };
 /* End PBXBuildFile section */
@@ -55,6 +56,7 @@
 		1CC7B64B20D2708200B74011 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		1CC7B64E20D2712800B74011 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		484E091220FF3DD0002F5024 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
+		48BE3D542109C99C00501A14 /* DetailsTwoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsTwoViewController.swift; sourceTree = "<group>"; };
 		48E12C8F20FF78A60080FC37 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		5B87DF9CF57944245F5C2E0F /* Pods-ImageExplorer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImageExplorer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ImageExplorer/Pods-ImageExplorer.debug.xcconfig"; sourceTree = "<group>"; };
 		6D4896AC12E0D096F9C702FE /* Pods-ImageExplorer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImageExplorer.release.xcconfig"; path = "Pods/Target Support Files/Pods-ImageExplorer/Pods-ImageExplorer.release.xcconfig"; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 				1CC7B64220D26DB900B74011 /* BookmarksViewController.swift */,
 				1CC7B64420D26E0100B74011 /* DetailsViewController.swift */,
 				484E091220FF3DD0002F5024 /* SearchResultsViewController.swift */,
+				48BE3D542109C99C00501A14 /* DetailsTwoViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -307,6 +310,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48BE3D552109C99C00501A14 /* DetailsTwoViewController.swift in Sources */,
 				1C70812620D27854005F4F4F /* Result.swift in Sources */,
 				1C70812C20D28007005F4F4F /* Post.swift in Sources */,
 				1C70812E20D286F2005F4F4F /* Notification+Extension.swift in Sources */,
