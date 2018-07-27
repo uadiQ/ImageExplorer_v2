@@ -23,12 +23,12 @@ class BrowseViewController: UIViewController {
         addGestures()
         HUD.show(.progress, onView: tableView)
         DataManager.instance.fetchRecentPhotos()
+        DataManager.instance.deletingDelegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = false
-        #warning("Work with this logic, reload cell at indexpath of removed post")//tableView.reloadData() // To setup favourite button correctly every time, after favourite is deleted
         setObservers()
     }
     
@@ -204,5 +204,21 @@ extension BrowseViewController: UISearchBarDelegate {
 extension BrowseViewController {
     @objc func hideKeyboardGestureRecognized() {
         self.view.endEditing(true)
+    }
+}
+
+// MARK: -
+extension BrowseViewController: BrowseScreenRefreshing {
+    func refreshCell(with postID: String) {
+        var deletingIndex: Int?
+        for (index, post) in recentPosts.enumerated() {
+            if post.id == postID {
+                deletingIndex = index
+            }
+        }
+        if let indexToDelete = deletingIndex {
+            let indexPath = IndexPath(row: indexToDelete, section: 0)
+            tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
+        }
     }
 }

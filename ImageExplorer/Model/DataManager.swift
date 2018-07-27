@@ -9,6 +9,10 @@
 import Foundation
 import SDWebImage
 
+protocol BrowseScreenRefreshing: class {
+    func refreshCell(with postID: String)
+}
+
 final class DataManager {
     static let instance = DataManager()
     private let networkManager = NetworkManager.instance
@@ -16,6 +20,8 @@ final class DataManager {
     private init() { self.loadFavourites() }
     
     var favourites: [Post] = []
+    
+    weak var deletingDelegate: BrowseScreenRefreshing?
     
     var recents: [Post] = [] {
         didSet {
@@ -91,12 +97,14 @@ final class DataManager {
     }
     
     func deleteFromFavourites(post: Post) {
+        let id = post.id
         guard let deletingIndex = favourites.index(of: post) else {
             print("No such post at favourites")
             return
         }
         favourites.remove(at: deletingIndex)
         CoreDataManager.instance.deletePostFromFavorites(post)
+        deletingDelegate?.refreshCell(with: id)
     }
     
     func downloadImage(with url: URL, completion: @escaping (Result<UIImage, Error>) -> Void) {
