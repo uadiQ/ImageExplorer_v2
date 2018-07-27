@@ -1,9 +1,8 @@
 //
 //  PostMO+CoreDataProperties.swift
-//  ImageExplorer
+//  
 //
-//  Created by Vadim Shoshin on 15.06.2018.
-//  Copyright © 2018 Vadim Shoshin. All rights reserved.
+//  Created by swstation on 7/27/18.
 //
 //
 
@@ -17,12 +16,14 @@ extension PostMO {
         return NSFetchRequest<PostMO>(entityName: "PostMO")
     }
 
-    @NSManaged public var id: String?
     @NSManaged public var fullImageUrl: String?
-    @NSManaged public var regularImageUrl: String?
     @NSManaged public var fullName: String?
-    @NSManaged public var username: String?
-    @NSManaged public var htmlLink: String?
     @NSManaged public var fullPhotoImage: NSData?
+    @NSManaged public var htmlLink: String?
+    @NSManaged public var id: String?
+    @NSManaged public var regularImageUrl: String?
+    @NSManaged public var username: String?
+    @NSManaged public var height: Int64
+    @NSManaged public var width: Int64
 
 }

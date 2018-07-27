@@ -12,6 +12,8 @@ import SwifterSwift
 class BookmarksViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
+    var previouslySavedCount = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -19,7 +21,11 @@ class BookmarksViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tableView.reloadData()
+        tabBarController?.tabBar.isHidden = false
+        if previouslySavedCount != DataManager.instance.favourites.count {
+            previouslySavedCount = DataManager.instance.favourites.count
+            tableView.reloadData()
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -63,7 +69,7 @@ extension BookmarksViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return PostTableViewCell.height
+        return ((tableView.frame.width - 30) / DataManager.instance.favourites[indexPath.row].ratio) + 80
     }
     
     

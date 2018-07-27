@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1C5E877420D2BEEE009E666D /* ImageExplorer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1C5E877220D2BEEE009E666D /* ImageExplorer.xcdatamodeld */; };
-		1C5E878720D31D22009E666D /* PostMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5E878520D31D22009E666D /* PostMO+CoreDataClass.swift */; };
-		1C5E878820D31D22009E666D /* PostMO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5E878620D31D22009E666D /* PostMO+CoreDataProperties.swift */; };
 		1C70812620D27854005F4F4F /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C70812520D27854005F4F4F /* Result.swift */; };
 		1C70812920D27B25005F4F4F /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C70812720D27B25005F4F4F /* PostTableViewCell.swift */; };
 		1C70812A20D27B25005F4F4F /* PostTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C70812820D27B25005F4F4F /* PostTableViewCell.xib */; };
@@ -27,6 +25,8 @@
 		1CC7B64C20D2708200B74011 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CC7B64B20D2708200B74011 /* CoreDataManager.swift */; };
 		1CC7B64F20D2712800B74011 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CC7B64E20D2712800B74011 /* Constants.swift */; };
 		484E091320FF3DD0002F5024 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484E091220FF3DD0002F5024 /* SearchResultsViewController.swift */; };
+		48A644BF210B5BC50095F181 /* PostMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A644BD210B5BC50095F181 /* PostMO+CoreDataClass.swift */; };
+		48A644C0210B5BC50095F181 /* PostMO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A644BE210B5BC50095F181 /* PostMO+CoreDataProperties.swift */; };
 		48E12C9020FF78A60080FC37 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E12C8F20FF78A60080FC37 /* UIViewController+Extension.swift */; };
 		6872DF6D40A408F11DAC6513 /* Pods_ImageExplorer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 145B040C6F31F87814363920 /* Pods_ImageExplorer.framework */; };
 /* End PBXBuildFile section */
@@ -34,8 +34,6 @@
 /* Begin PBXFileReference section */
 		145B040C6F31F87814363920 /* Pods_ImageExplorer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ImageExplorer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C5E877320D2BEEE009E666D /* ImageExplorer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ImageExplorer.xcdatamodel; sourceTree = "<group>"; };
-		1C5E878520D31D22009E666D /* PostMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostMO+CoreDataClass.swift"; sourceTree = "<group>"; };
-		1C5E878620D31D22009E666D /* PostMO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostMO+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		1C70812520D27854005F4F4F /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		1C70812720D27B25005F4F4F /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		1C70812820D27B25005F4F4F /* PostTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostTableViewCell.xib; sourceTree = "<group>"; };
@@ -55,6 +53,8 @@
 		1CC7B64B20D2708200B74011 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		1CC7B64E20D2712800B74011 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		484E091220FF3DD0002F5024 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
+		48A644BD210B5BC50095F181 /* PostMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "PostMO+CoreDataClass.swift"; path = "/Users/swstation/Documents/Projects/ImageExplorer-master/ImageExplorer/Services/CoreData/PostMO+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		48A644BE210B5BC50095F181 /* PostMO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "PostMO+CoreDataProperties.swift"; path = "/Users/swstation/Documents/Projects/ImageExplorer-master/ImageExplorer/Services/CoreData/PostMO+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		48E12C8F20FF78A60080FC37 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		5B87DF9CF57944245F5C2E0F /* Pods-ImageExplorer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImageExplorer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ImageExplorer/Pods-ImageExplorer.debug.xcconfig"; sourceTree = "<group>"; };
 		6D4896AC12E0D096F9C702FE /* Pods-ImageExplorer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImageExplorer.release.xcconfig"; path = "Pods/Target Support Files/Pods-ImageExplorer/Pods-ImageExplorer.release.xcconfig"; sourceTree = "<group>"; };
@@ -83,8 +83,8 @@
 		1C5E877120D2BEC6009E666D /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				1C5E878520D31D22009E666D /* PostMO+CoreDataClass.swift */,
-				1C5E878620D31D22009E666D /* PostMO+CoreDataProperties.swift */,
+				48A644BD210B5BC50095F181 /* PostMO+CoreDataClass.swift */,
+				48A644BE210B5BC50095F181 /* PostMO+CoreDataProperties.swift */,
 				1CC7B64B20D2708200B74011 /* CoreDataManager.swift */,
 				1C5E877220D2BEEE009E666D /* ImageExplorer.xcdatamodeld */,
 			);
@@ -313,15 +313,15 @@
 				1C5E877420D2BEEE009E666D /* ImageExplorer.xcdatamodeld in Sources */,
 				48E12C9020FF78A60080FC37 /* UIViewController+Extension.swift in Sources */,
 				1CC7B64A20D2707900B74011 /* NetworkManager.swift in Sources */,
-				1C5E878820D31D22009E666D /* PostMO+CoreDataProperties.swift in Sources */,
 				1CC7B64320D26DB900B74011 /* BookmarksViewController.swift in Sources */,
 				1CC7B64720D2705900B74011 /* DataManager.swift in Sources */,
 				1CC7B64120D26D9300B74011 /* BrowseViewController.swift in Sources */,
 				484E091320FF3DD0002F5024 /* SearchResultsViewController.swift in Sources */,
 				1CC7B62B20D2651200B74011 /* AppDelegate.swift in Sources */,
+				48A644BF210B5BC50095F181 /* PostMO+CoreDataClass.swift in Sources */,
 				1CC7B64C20D2708200B74011 /* CoreDataManager.swift in Sources */,
+				48A644C0210B5BC50095F181 /* PostMO+CoreDataProperties.swift in Sources */,
 				1C70812920D27B25005F4F4F /* PostTableViewCell.swift in Sources */,
-				1C5E878720D31D22009E666D /* PostMO+CoreDataClass.swift in Sources */,
 				1CC7B64520D26E0100B74011 /* DetailsViewController.swift in Sources */,
 				1CC7B64F20D2712800B74011 /* Constants.swift in Sources */,
 			);

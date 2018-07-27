@@ -74,10 +74,10 @@ final class DataManager {
                                urls: post.urls,
                                links: post.links,
                                user: post.user,
-                               height: 1080,
-                               width: 1920)
+                               height: post.height,
+                               width: post.width)
             
-            #warning ("real values up here")
+           // #warning ("real values up here")
             
             if let imageUrl = URL(string: newPost.urls.full) {
                 newPost.savePostImage(by: imageUrl)
