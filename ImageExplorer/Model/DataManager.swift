@@ -73,7 +73,11 @@ final class DataManager {
             var newPost = Post(id: post.id,
                                urls: post.urls,
                                links: post.links,
-                               user: post.user)
+                               user: post.user,
+                               height: 1080,
+                               width: 1920)
+            
+            #warning ("real values up here")
             
             if let imageUrl = URL(string: newPost.urls.full) {
                 newPost.savePostImage(by: imageUrl)

@@ -25,17 +25,25 @@ struct Links {
 
 struct Post {
     let id: String
-    let urls: Urls
-    let links: Links
     let user: User
+    let width: Int
+    let height: Int
     
     var fullPhotoImage: UIImage?
     
-    init(id: String, urls: Urls, links: Links, user: User) {
+    let urls: Urls
+    let links: Links
+    var ratio: CGFloat {
+        return (CGFloat(width) / CGFloat(height))
+    }
+    
+    init(id: String, urls: Urls, links: Links, user: User, height: Int, width: Int) {
         self.id = id
         self.urls = urls
         self.links = links
         self.user = user
+        self.height = height
+        self.width = width
     }
     
     init?(json: JSON) {
@@ -44,7 +52,9 @@ struct Post {
             let full = json["urls"]["full"].string,
             let regular = json["urls"]["regular"].string,
             let username = json["user"]["username"].string,
-            let name = json["user"]["name"].string else {
+            let name = json["user"]["name"].string,
+            let width = json["width"].int,
+            let height = json["height"].int else {
                 print("Didn't parse all needed data")
                 return nil
         }
@@ -57,6 +67,8 @@ struct Post {
         self.links = links
         self.urls = urls
         self.user = user
+        self.width = width
+        self.height = height
     }
     
     mutating func addImage(from data: NSData?) {

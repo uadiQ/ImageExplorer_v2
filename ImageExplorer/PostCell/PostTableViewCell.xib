@@ -18,7 +18,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="349" height="447.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jep-gP-ww7">
+                    <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="Jep-gP-ww7">
                         <rect key="frame" x="15" y="15" width="319" height="417.5"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d9o-iz-OGQ">

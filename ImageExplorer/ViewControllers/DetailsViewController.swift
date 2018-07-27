@@ -14,6 +14,7 @@ import PKHUD
 class DetailsViewController: UIViewController {
     @IBOutlet private weak var photoImage: UIImageView!
     @IBOutlet private weak var authorName: UILabel!
+    @IBOutlet private weak var photoImageHeight: NSLayoutConstraint!
     
     var post: Post!
     
@@ -29,6 +30,9 @@ class DetailsViewController: UIViewController {
             setImage(with: post.urls.regular)
         }
         authorName.text = "Author: \(post.user.name)"
+        photoImageHeight.constant = self.view.bounds.width / post.ratio
+        view.layoutIfNeeded()
+        tabBarController?.tabBar.isHidden = true
     }
     
     private func setImage(with url: String) {

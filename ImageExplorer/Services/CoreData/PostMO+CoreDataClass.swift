@@ -17,7 +17,9 @@ public class PostMO: NSManagedObject {
         let urls = Urls(full: self.fullImageUrl ?? "", regular: self.regularImageUrl ?? "")
         let links = Links(html: self.htmlLink ?? "")
         
-        var plainPost = Post(id: self.id ?? "", urls: urls, links: links, user: user)
+        #warning ("paste normal values here")
+        
+        var plainPost = Post(id: self.id ?? "", urls: urls, links: links, user: user, height: 1080, width: 1920)
         plainPost.addImage(from: self.fullPhotoImage)
         return plainPost
     }

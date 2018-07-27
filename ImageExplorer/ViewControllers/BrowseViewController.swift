@@ -27,6 +27,7 @@ class BrowseViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = false
         tableView.reloadData() // To setup favourite button correctly every time, after favourite is deleted
         setObservers()
     }
@@ -131,7 +132,7 @@ extension BrowseViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return PostTableViewCell.height
+        return ((tableView.frame.width - 30) / recentPosts[indexPath.row].ratio) + 80
     }
     
     
