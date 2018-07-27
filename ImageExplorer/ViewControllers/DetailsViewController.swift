@@ -54,11 +54,11 @@ class DetailsViewController: UIViewController {
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destVC = segue.destination as? DetailsTwoViewController {
-            destVC.post = self.post
-        }
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if let destVC = segue.destination as? DetailsTwoViewController {
+//            destVC.post = self.post
+//        }
+//    }
     
     private func downloadFullSizeImage(with url: String, completion: @escaping (Result<UIImage, Error>) -> Void) {
         guard let targetUrl = URL(string: url) else {

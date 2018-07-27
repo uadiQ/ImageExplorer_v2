@@ -28,7 +28,7 @@ class BrowseViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = false
-        tableView.reloadData() // To setup favourite button correctly every time, after favourite is deleted
+        #warning("Work with this logic, reload cell at indexpath of removed post")//tableView.reloadData() // To setup favourite button correctly every time, after favourite is deleted
         setObservers()
     }
     
