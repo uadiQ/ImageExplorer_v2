@@ -24,15 +24,19 @@ final class NetworkManager {
         Alamofire.request(Constants.Networking.photos, method: .get, parameters: parameters, headers: Constants.Networking.headers).responseJSON { response in
             
             // Getting info for pagination
-            
+            var paginationInfo: String = ""
             if let link = response.response?.allHeaderFields["Link"] as? String {
-                self.parsePaginationInfo(linkString: link)
+                paginationInfo = self.parsePaginationInfo(linkString: link)
             }
  
             
             switch response.result {
             case .success(let value):
                 let jsonResponse = JSON(value)
+                let responseModel = ResponseModel(json: jsonResponse, paginationInfo: paginationInfo)
+                
+                #warning("Implement usage of responseModel")
+                
                 completionHandler(.success(jsonResponse))
                 
             case .failure(let error):
@@ -59,6 +63,8 @@ final class NetworkManager {
         }
     }
     
+    #warning("Implement paginate method")
+    
     func downloadImage(with url: URL, completion:@escaping (Result<UIImage, Error>) -> Void) {
         DispatchQueue.global().async {
             guard let imageData = try? Data(contentsOf: url),
@@ -70,16 +76,21 @@ final class NetworkManager {
         }
     }
     
-    private func parsePaginationInfo(linkString: String) {
+    private func parsePaginationInfo(linkString: String) -> String {
+        var paginatingInfo: String = ""
         let links = linkString.split(separator: ",")
         let components = links.flatMap { $0.split(separator: ";") }
         if let lastComponent = components.last, lastComponent.hasSuffix("\"next\"") {
             let requiredIndex = components.index(of: lastComponent)! - 1
             var nextPage = components[requiredIndex]
-            nextPage.removeFirst()
+            let startIndex = nextPage.startIndex
+            let endIndex = nextPage.index(startIndex, offsetBy: 1)
+            nextPage.removeSubrange(startIndex...endIndex)
             nextPage.removeLast()
             print(nextPage)
+            paginatingInfo = String(nextPage)
         }
+        return paginatingInfo
     }
     
 }
