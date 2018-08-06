@@ -37,9 +37,10 @@ class SearchResultsViewController: UIViewController {
         DataManager.instance.performSearch(for: searchingCategory) { result in
             DispatchQueue.main.async {
                 switch result {
-                case .success(let postsArray):
+                case .success(let response):
                     HUD.hide()
-                    self.searchResults = postsArray
+                    self.searchResults = response.0
+                    self.paginationInfo = response.1
                     self.tableView.reloadData()
                 case .fail:
                     print("Failed search for keyword \(String(describing: self.searchingCategory))")
@@ -51,6 +52,40 @@ class SearchResultsViewController: UIViewController {
     
     private func fetchNextPage() {
         #warning("Implement fetching next page")
+        isPaginating = true
+        tableView.reloadSections(IndexSet(integer: 1), with: .bottom)
+        let offset = tableView.contentOffset
+        tableView.setContentOffset(offset, animated: false)
+        guard let paginatingURL = URL(string: paginationInfo) else {
+            print("Wrong pagination URL")
+            return
+        }
+        
+        
+        DataManager.instance.paginateSearch(with: paginatingURL) { [weak self] response in
+           // let currentCount = self!.searchResults.count
+            let difference = response.0.count
+            let startingIndex = IndexPath(row: self!.searchResults.count - 1, section: 0)
+            var indexes: [IndexPath] = []
+            for i in 1...difference {
+                let newIndexPath = IndexPath(row: startingIndex.row + i, section: 0)
+                indexes.append(newIndexPath)
+            }
+            
+            
+            self?.searchResults.append(contentsOf: response.0)
+            self?.paginationInfo = response.1
+            
+            self?.tableView.beginUpdates()
+            self?.tableView.insertRows(at: indexes, with: UITableViewRowAnimation.none)
+            self?.tableView.endUpdates()
+            
+            self?.isPaginating = false
+            self?.tableView.reloadSections(IndexSet(integer: 1), with: .bottom)
+            // scrolling to the next post
+            self?.tableView.safeScrollToRow(at: IndexPath(row: indexes[0].row - 1, section: 0), at: UITableViewScrollPosition.top, animated: true)
+        }
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

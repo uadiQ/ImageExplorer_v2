@@ -44,13 +44,20 @@ final class NetworkManager {
         }
     }
     
-    func searchPhotos(by keyword: String, completionHandler: @escaping (Result<JSON, Error>) -> Void) {
+    func searchPhotos(by keyword: String, completionHandler: @escaping (Result<ResponseModel, Error>) -> Void) {
         let parameters: Parameters = [ "per_page": 30, "query": keyword ]
         Alamofire.request(Constants.Networking.searchPhotos, method: .get, parameters: parameters, headers: Constants.Networking.headers).responseJSON { response in
+            
+            var paginationInfo: String = ""
+            if let link = response.response?.allHeaderFields["Link"] as? String {
+                paginationInfo = self.parsePaginationInfo(linkString: link)
+            }
+            
             switch response.result {
             case .success(let value):
                 let jsonResponse = JSON(value)
-                completionHandler(.success(jsonResponse))
+                let responseModel = ResponseModel(json: jsonResponse, paginationInfo: paginationInfo)
+                completionHandler(.success(responseModel))
                 
             case .failure(let error):
                 print("failedRequest")
