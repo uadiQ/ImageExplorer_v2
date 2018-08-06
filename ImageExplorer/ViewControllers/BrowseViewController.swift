@@ -16,13 +16,16 @@ class BrowseViewController: UIViewController {
     
     private var recentPosts: [Post] = []
     private var searchedCategory: String?
+    private var paginationInfo: String = ""
+    
+    var isPaginating = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         addGestures()
         HUD.show(.progress, onView: tableView)
-        DataManager.instance.fetchRecentPhotos()
+        fetchRecents()
         DataManager.instance.deletingDelegate = self
     }
     
@@ -37,6 +40,7 @@ class BrowseViewController: UIViewController {
         removeObservers()
     }
     
+    //MARK: - Viewcontroller setup methods
     private func setupUI() {
         title = "Recent"
         setupSearchBar()
@@ -67,7 +71,7 @@ class BrowseViewController: UIViewController {
         
         let downSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(hideKeyboardGestureRecognized))
         downSwipeGestureRecognizer.direction = .down
-
+        
         for recognizer in [upSwipeGestureRecognizer, downSwipeGestureRecognizer] {
             view.addGestureRecognizer(recognizer)
         }
@@ -78,13 +82,12 @@ class BrowseViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(PostTableViewCell.nib, forCellReuseIdentifier: PostTableViewCell.reuseID)
+        tableView.register(PaginateTableViewCell.nib, forCellReuseIdentifier: PaginateTableViewCell.reuseID)
         tableView.isUserInteractionEnabled = true
         tableView.keyboardDismissMode = .onDrag
     }
     
     private func setObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(processFetchedRecents), name: .RecentsUpdated, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(processLoadedImage), name: .ImageLoaded, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(processFailedRequest), name: .RequestFailed, object: nil)
     }
     
@@ -103,21 +106,54 @@ class BrowseViewController: UIViewController {
         }
     }
     
+    //MARK: - App logic methods
+    
+    private func fetchRecents() {
+        DataManager.instance.fetchRecentPhotos { [weak self] paginationString in
+            self?.recentPosts = DataManager.instance.recents
+            self?.paginationInfo = paginationString
+            HUD.hide()
+            self?.tableView.reloadData()
+        }
+    }
+    
+    @objc private func fetchNextPage() {
+        isPaginating = true
+        tableView.reloadSections(IndexSet(integer: 1), with: .bottom)
+        let offset = tableView.contentOffset
+        tableView.setContentOffset(offset, animated: false)
+        guard let paginatingURL = URL(string: paginationInfo) else {
+            print("Wrong pagination URL")
+            return
+        }
+        
+        DataManager.instance.paginateRecents(with: paginatingURL) { [weak self] paginationString in
+            
+            let difference = DataManager.instance.recents.count - (self?.recentPosts.count ?? 0)
+            let startingIndex = IndexPath(row: self!.recentPosts.count - 1, section: 0)
+            var indexes: [IndexPath] = []
+            for i in 1...difference {
+                let newIndexPath = IndexPath(row: startingIndex.row + i, section: 0)
+                indexes.append(newIndexPath)
+            }
+            self?.recentPosts = DataManager.instance.recents
+            
+            self?.tableView.beginUpdates()
+            self?.tableView.insertRows(at: indexes, with: UITableViewRowAnimation.none)
+            self?.tableView.endUpdates()
+            
+            self?.paginationInfo = paginationString
+            self?.isPaginating = false
+            self?.tableView.reloadSections(IndexSet(integer: 1), with: .bottom)
+            // scrolling to the next post
+            self?.tableView.safeScrollToRow(at: IndexPath(row: indexes[0].row - 1, section: 0), at: UITableViewScrollPosition.top, animated: true)
+        }
+    }
+    
 }
 
 // MARK: - Notification
 extension BrowseViewController {
-    @objc func processFetchedRecents() {
-        recentPosts = DataManager.instance.recents
-        HUD.hide()
-        
-        tableView.reloadData()
-    }
-    
-    @objc func processLoadedImage() {
-        tableView.beginUpdates()
-        tableView.endUpdates()
-    }
     
     @objc func processFailedRequest() {
         HUD.hide()
@@ -127,23 +163,45 @@ extension BrowseViewController {
 
 // MARK: - TableViewDelegate, TableViewDataSource
 extension BrowseViewController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return recentPosts.count
+        if section == 0 {
+            return recentPosts.count
+        } else {
+            return 1
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return ((tableView.frame.width - 30) / recentPosts[indexPath.row].ratio) + 80
+        if indexPath.section == 0 {
+            return ((tableView.frame.width - 30) / recentPosts[indexPath.row].ratio) + 80
+        }
+        else {
+            return 44
+        }
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.reuseID, for: indexPath) as? PostTableViewCell else {
-            fatalError("Cell with wrong id")
+        var cell = UITableViewCell()
+        if indexPath.section == 0 {
+            guard let postCell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.reuseID, for: indexPath) as? PostTableViewCell else {
+                fatalError("Cell with wrong id")
+            }
+            let postToPresent = recentPosts[indexPath.row]
+            postCell.update(with: postToPresent)
+            postCell.delegate = self
+            postCell.favouriteAddingDelegate = self
+            cell = postCell
+        } else  {
+            guard let paginationCell = tableView.dequeueReusableCell(withIdentifier: PaginateTableViewCell.reuseID, for: indexPath) as? PaginateTableViewCell else {
+                fatalError("Cell with wrong id")
+            }
+            cell = paginationCell
         }
-        let postToPresent = recentPosts[indexPath.row]
-        cell.update(with: postToPresent)
-        cell.delegate = self
-        cell.favouriteAddingDelegate = self
         
         return cell
     }
@@ -152,6 +210,12 @@ extension BrowseViewController: UITableViewDelegate, UITableViewDataSource {
         let postToPresent = recentPosts[indexPath.row]
         performSegue(withIdentifier: Constants.Navigation.showDetails, sender: postToPresent)
         self.view.endEditing(true)
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.section == 1 && !isPaginating && paginationInfo != "" {
+            fetchNextPage()
+        }
     }
 }
 
@@ -196,7 +260,7 @@ extension BrowseViewController: UISearchBarDelegate {
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(false, animated: true)
     }
-
+    
 }
 
 // MARK: - Hide Keyboard Gestures

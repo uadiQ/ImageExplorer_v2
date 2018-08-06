@@ -9,6 +9,7 @@ target 'ImageExplorer' do
 
 pod 'Alamofire'
 pod 'PKHUD'
+pod 'AlamofireImage'
 pod 'SwiftyJSON'
 pod 'SDWebImage', '~> 4.0'
 pod 'SwifterSwift/UIKit'

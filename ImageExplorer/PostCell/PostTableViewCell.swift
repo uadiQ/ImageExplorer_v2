@@ -72,7 +72,9 @@ class PostTableViewCell: UITableViewCell {
         if let image = post.fullPhotoImage {
             photoImage.image = image
         } else {
-            guard let imageUrl = URL(string: post.urls.regular) else { return }
+            guard let imageUrl = URL(string: post.urls.regular) else {
+                return
+            }
             photoImage.sd_setImage(with: imageUrl)
         }
         likeButton.isEnabled = !isFavourite(post: post)

@@ -25,6 +25,8 @@
 		1CC7B64C20D2708200B74011 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CC7B64B20D2708200B74011 /* CoreDataManager.swift */; };
 		1CC7B64F20D2712800B74011 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CC7B64E20D2712800B74011 /* Constants.swift */; };
 		4832CB052114B03000B17CD9 /* ResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4832CB042114B03000B17CD9 /* ResponseModel.swift */; };
+		4832CB09211839C400B17CD9 /* PaginateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4832CB07211839C400B17CD9 /* PaginateTableViewCell.swift */; };
+		4832CB0A211839C400B17CD9 /* PaginateTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4832CB08211839C400B17CD9 /* PaginateTableViewCell.xib */; };
 		484E091320FF3DD0002F5024 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484E091220FF3DD0002F5024 /* SearchResultsViewController.swift */; };
 		48A644BF210B5BC50095F181 /* PostMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A644BD210B5BC50095F181 /* PostMO+CoreDataClass.swift */; };
 		48A644C0210B5BC50095F181 /* PostMO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A644BE210B5BC50095F181 /* PostMO+CoreDataProperties.swift */; };
@@ -54,6 +56,8 @@
 		1CC7B64B20D2708200B74011 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		1CC7B64E20D2712800B74011 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		4832CB042114B03000B17CD9 /* ResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseModel.swift; sourceTree = "<group>"; };
+		4832CB07211839C400B17CD9 /* PaginateTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginateTableViewCell.swift; sourceTree = "<group>"; };
+		4832CB08211839C400B17CD9 /* PaginateTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaginateTableViewCell.xib; sourceTree = "<group>"; };
 		484E091220FF3DD0002F5024 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		48A644BD210B5BC50095F181 /* PostMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "PostMO+CoreDataClass.swift"; path = "/Users/swstation/Documents/Projects/ImageExplorer-master/ImageExplorer/Services/CoreData/PostMO+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		48A644BE210B5BC50095F181 /* PostMO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "PostMO+CoreDataProperties.swift"; path = "/Users/swstation/Documents/Projects/ImageExplorer-master/ImageExplorer/Services/CoreData/PostMO+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
@@ -117,6 +121,7 @@
 				1CC7B64D20D2711E00B74011 /* Utils */,
 				1CC7B64820D2706A00B74011 /* Services */,
 				1CC7B63F20D26D6E00B74011 /* PostCell */,
+				4832CB06211839A500B17CD9 /* PaginateCell */,
 				1CC7B63D20D26D5300B74011 /* ViewControllers */,
 				1CC7B63C20D26D4C00B74011 /* Model */,
 				1CC7B62A20D2651200B74011 /* AppDelegate.swift */,
@@ -187,6 +192,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		4832CB06211839A500B17CD9 /* PaginateCell */ = {
+			isa = PBXGroup;
+			children = (
+				4832CB07211839C400B17CD9 /* PaginateTableViewCell.swift */,
+				4832CB08211839C400B17CD9 /* PaginateTableViewCell.xib */,
+			);
+			path = PaginateCell;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -248,6 +262,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1CC7B63520D2651400B74011 /* LaunchScreen.storyboard in Resources */,
+				4832CB0A211839C400B17CD9 /* PaginateTableViewCell.xib in Resources */,
 				1CC7B63220D2651400B74011 /* Assets.xcassets in Resources */,
 				1CC7B63020D2651200B74011 /* Main.storyboard in Resources */,
 				1C70812A20D27B25005F4F4F /* PostTableViewCell.xib in Resources */,
@@ -265,6 +280,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-ImageExplorer/Pods-ImageExplorer-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
 				"${BUILT_PRODUCTS_DIR}/PKHUD/PKHUD.framework",
 				"${PODS_ROOT}/Reveal-SDK/RevealServer-16/iOS/RevealServer.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
@@ -274,6 +290,7 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PKHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RevealServer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
@@ -327,6 +344,7 @@
 				48A644C0210B5BC50095F181 /* PostMO+CoreDataProperties.swift in Sources */,
 				1C70812920D27B25005F4F4F /* PostTableViewCell.swift in Sources */,
 				1CC7B64520D26E0100B74011 /* DetailsViewController.swift in Sources */,
+				4832CB09211839C400B17CD9 /* PaginateTableViewCell.swift in Sources */,
 				1CC7B64F20D2712800B74011 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

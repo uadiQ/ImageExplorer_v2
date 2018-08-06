@@ -19,7 +19,7 @@ final class NetworkManager {
     
     private init() { }
     
-    func fetchRecentPhotos(completionHandler: @escaping (Result<JSON, Error>) -> Void) {
+    func fetchRecentPhotos(completionHandler: @escaping (Result<ResponseModel, Error>) -> Void) {
         let parameters: Parameters = [ "per_page": 30 ]
         Alamofire.request(Constants.Networking.photos, method: .get, parameters: parameters, headers: Constants.Networking.headers).responseJSON { response in
             
@@ -34,10 +34,7 @@ final class NetworkManager {
             case .success(let value):
                 let jsonResponse = JSON(value)
                 let responseModel = ResponseModel(json: jsonResponse, paginationInfo: paginationInfo)
-                
-                #warning("Implement usage of responseModel")
-                
-                completionHandler(.success(jsonResponse))
+                completionHandler(.success(responseModel))
                 
             case .failure(let error):
                 print("failedRequest")

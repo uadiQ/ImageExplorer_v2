@@ -1,5 +1,7 @@
 PODS:
   - Alamofire (4.7.3)
+  - AlamofireImage (3.3.1):
+    - Alamofire (~> 4.5)
   - PKHUD (5.1.0)
   - Reveal-SDK (16)
   - SDWebImage (4.4.1):
@@ -10,6 +12,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
+  - AlamofireImage
   - PKHUD
   - Reveal-SDK
   - SDWebImage (~> 4.0)
@@ -19,6 +22,7 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - AlamofireImage
     - PKHUD
     - Reveal-SDK
     - SDWebImage
@@ -27,12 +31,13 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
+  AlamofireImage: 3b35b586853abaf94ca1250f4e94cff3c21a4c0d
   PKHUD: 62ea46a1e88c4def1da784878d199bb54c841e3c
   Reveal-SDK: ed36bdbb3cbf90b94ae5da0dbcb3c7ae6738c51f
   SDWebImage: 47e9b5b925cbce75946c23f0c42dd19464189af4
   SwifterSwift: 1ce0e31801ddd3a2bd3256626275425adb01067a
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
 
-PODFILE CHECKSUM: 1785bb4bd45eff8aeb7dbc03ccdafa3f8ed7cea2
+PODFILE CHECKSUM: 3ff310efb1f8f4475906b52880f74080223b672b
 
 COCOAPODS: 1.5.3

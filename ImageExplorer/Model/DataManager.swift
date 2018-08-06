@@ -23,11 +23,7 @@ final class DataManager {
     
     weak var deletingDelegate: BrowseScreenRefreshing?
     
-    var recents: [Post] = [] {
-        didSet {
-            NotificationCenter.default.post(name: .RecentsUpdated, object: nil)
-        }
-    }
+    var recents: [Post] = []
     
     func loadFavourites() {
         if !CoreDataManager.instance.isFavoritesEmpty {
@@ -37,18 +33,49 @@ final class DataManager {
         }
     }
     
-    func fetchRecentPhotos() {
+    func parseResponse(_ responseModel: ResponseModel) -> ([Post], String)? {
+        guard let jsonArray = responseModel.json.array else {
+            print("Error at transition into array")
+            return nil
+        }
+        var fetchedPosts: [Post] = []
+        for object in jsonArray {
+            guard let post = Post(json: object) else {
+                continue
+            }
+            fetchedPosts.append(post)
+        }
+        let response = (fetchedPosts, responseModel.paginationInfo)
+        return response
+    }
+    
+    func paginateRecents(with paginationURL: URL, completion: @escaping (String) -> Void) {
+        networkManager.paginate(with: paginationURL) { [weak self] result in
+            switch result {
+            case .success(let responseModel):
+                guard let response = self?.parseResponse(responseModel) else {
+                    print("Error at parsing data")
+                    return
+                }
+                self?.recents.append(contentsOf: response.0)
+                completion(response.1)
+            case .fail(let error):
+                NotificationCenter.default.post(name: .RequestFailed, object: nil)
+                print(error)
+            }
+        }
+    }
+    
+    func fetchRecentPhotos(completion: @escaping (String) -> Void) {
         networkManager.fetchRecentPhotos { [weak self] result in
             switch result {
-            case .success(let jsonValue):
-                guard let jsonArray = jsonValue.array else {print("Error at transition into array"); return }
-                var fetchedPosts: [Post] = []
-                for object in jsonArray {
-                    guard let post = Post(json: object) else { continue }
-                    fetchedPosts.append(post)
+            case .success(let responseModel):
+                guard let response = self?.parseResponse(responseModel) else {
+                    print("Error at parsing data")
+                    return
                 }
-                self?.recents = fetchedPosts
-                
+                self?.recents = response.0
+                completion(response.1)
             case .fail(let error):
                 NotificationCenter.default.post(name: .RequestFailed, object: nil)
                 print(error)
