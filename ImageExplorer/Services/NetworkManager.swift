@@ -28,7 +28,7 @@ final class NetworkManager {
             if let link = response.response?.allHeaderFields["Link"] as? String {
                 paginationInfo = self.parsePaginationInfo(linkString: link)
             }
- 
+            
             
             switch response.result {
             case .success(let value):
@@ -64,6 +64,25 @@ final class NetworkManager {
     }
     
     #warning("Implement paginate method")
+    func paginate(with url: URL, completion: @escaping (Result<ResponseModel, Error>) -> Void) {
+        Alamofire.request(url, method: .get, headers: Constants.Networking.headers).responseJSON { response in
+            
+            var paginationInfo: String = ""
+            if let link = response.response?.allHeaderFields["Link"] as? String {
+                paginationInfo = self.parsePaginationInfo(linkString: link)
+            }
+            
+            switch response.result {
+            case .success(let value):
+                let jsonResponse = JSON(value)
+                let responseModel = ResponseModel(json: jsonResponse, paginationInfo: paginationInfo)
+                completion(.success(responseModel))
+            case .failure(let error):
+                completion(.fail(error))
+            }
+        }
+    }
+    
     
     func downloadImage(with url: URL, completion:@escaping (Result<UIImage, Error>) -> Void) {
         DispatchQueue.global().async {
