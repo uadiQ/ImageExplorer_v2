@@ -217,6 +217,7 @@ extension BrowseViewController: UITableViewDelegate, UITableViewDataSource {
             fetchNextPage()
         }
     }
+
 }
 
 // MARK: - Postsharing protocol

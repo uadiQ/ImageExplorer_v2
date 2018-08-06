@@ -51,7 +51,6 @@ class SearchResultsViewController: UIViewController {
     }
     
     private func fetchNextPage() {
-        #warning("Implement fetching next page")
         isPaginating = true
         tableView.reloadSections(IndexSet(integer: 1), with: .bottom)
         let offset = tableView.contentOffset
@@ -63,7 +62,6 @@ class SearchResultsViewController: UIViewController {
         
         
         DataManager.instance.paginateSearch(with: paginatingURL) { [weak self] response in
-           // let currentCount = self!.searchResults.count
             let difference = response.0.count
             let startingIndex = IndexPath(row: self!.searchResults.count - 1, section: 0)
             var indexes: [IndexPath] = []
@@ -71,7 +69,6 @@ class SearchResultsViewController: UIViewController {
                 let newIndexPath = IndexPath(row: startingIndex.row + i, section: 0)
                 indexes.append(newIndexPath)
             }
-            
             
             self?.searchResults.append(contentsOf: response.0)
             self?.paginationInfo = response.1
