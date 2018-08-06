@@ -236,6 +236,23 @@ extension BrowseViewController: FavouriteAdding {
     }
 }
 
+
+// MARK: - BrowseScreenRefreshing protocol
+extension BrowseViewController: BrowseScreenRefreshing {
+    func refreshCell(with postID: String) {
+        var deletingIndex: Int?
+        for (index, post) in recentPosts.enumerated() {
+            if post.id == postID {
+                deletingIndex = index
+            }
+        }
+        if let indexToDelete = deletingIndex {
+            let indexPath = IndexPath(row: indexToDelete, section: 0)
+            tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
+        }
+    }
+}
+
 // MARK: - SearchBar Delegate Methods
 extension BrowseViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -268,21 +285,5 @@ extension BrowseViewController: UISearchBarDelegate {
 extension BrowseViewController {
     @objc func hideKeyboardGestureRecognized() {
         self.view.endEditing(true)
-    }
-}
-
-// MARK: -
-extension BrowseViewController: BrowseScreenRefreshing {
-    func refreshCell(with postID: String) {
-        var deletingIndex: Int?
-        for (index, post) in recentPosts.enumerated() {
-            if post.id == postID {
-                deletingIndex = index
-            }
-        }
-        if let indexToDelete = deletingIndex {
-            let indexPath = IndexPath(row: indexToDelete, section: 0)
-            tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
-        }
     }
 }

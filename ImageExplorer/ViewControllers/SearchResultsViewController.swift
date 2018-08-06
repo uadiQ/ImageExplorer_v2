@@ -13,8 +13,9 @@ class SearchResultsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var searchingCategory: String!
-    
+    var isPaginating = false
     var searchResults: [Post] = []
+    var paginationInfo = ""
     
     override func viewDidLoad() {
         HUD.show(.progress)
@@ -29,6 +30,7 @@ class SearchResultsViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(PostTableViewCell.nib, forCellReuseIdentifier: PostTableViewCell.reuseID)
+        tableView.register(PaginateTableViewCell.nib, forCellReuseIdentifier: PaginateTableViewCell.reuseID)
     }
     
     private func loadSearchedPosts(for category: String) {
@@ -47,6 +49,10 @@ class SearchResultsViewController: UIViewController {
         }
     }
     
+    private func fetchNextPage() {
+        #warning("Implement fetching next page")
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let destVC = segue.destination as? DetailsViewController else {
             return
@@ -57,29 +63,56 @@ class SearchResultsViewController: UIViewController {
 
 // MARK: - TableViewDelegate, TableViewDataSource
 extension SearchResultsViewController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return searchResults.count
+        if section == 0 {
+           return searchResults.count
+        } else {
+           return 1
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == 0 {
         return PostTableViewCell.height
+        } else {
+            return 44
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.reuseID, for: indexPath) as? PostTableViewCell else {
+        var cell: UITableViewCell
+        if indexPath.section == 0 {
+        guard let postCell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.reuseID, for: indexPath) as? PostTableViewCell else {
             fatalError("Cell with wrong ID")
         }
         
         let postToPresent = searchResults[indexPath.row]
-        cell.update(with: postToPresent)
-        cell.delegate = self
-        cell.favouriteAddingDelegate = self
+        postCell.update(with: postToPresent)
+        postCell.delegate = self
+        postCell.favouriteAddingDelegate = self
+        cell = postCell
+        } else {
+            guard let paginatingCell = tableView.dequeueReusableCell(withIdentifier: PaginateTableViewCell.reuseID, for: indexPath) as? PaginateTableViewCell else {
+                fatalError("Cell with wrong ID")
+            }
+            cell = paginatingCell
+        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let postToPresent = searchResults[indexPath.row]
         performSegue(withIdentifier: Constants.Navigation.showDetails, sender: postToPresent)
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.section == 1 && !isPaginating && paginationInfo != "" {
+            fetchNextPage()
+        }
     }
 }
 
